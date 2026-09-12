@@ -185,3 +185,37 @@ const TON_CATEGORIE = {
     description: "Direct, clair, orienté action — le ton d'un email ou d'un rapport professionnel.",
     extra: [
       [/\bje voudrais\b/gi, "je souhaite"],
+      [/\bj'espère que\b/gi, "je vous confirme que"],
+      [/\bs'il vous plaît\b/gi, "merci de bien vouloir"],
+    ],
+  },
+  academique: {
+    description: "Rigoureux, impersonnel, argumenté — adapté à un mémoire ou un article.",
+    extra: [
+      [/\bje pense que\b/gi, "il apparaît que"],
+      [/\bon peut dire que\b/gi, "il convient de souligner que"],
+      [/\bd'après moi\b/gi, "selon cette analyse"],
+      [/\bpour finir\b/gi, "en définitive"],
+    ],
+  },
+  administratif: {
+    description: "Formel, impersonnel, vouvoiement systématique — le ton d'un courrier officiel.",
+    extra: [
+      [/\bje voudrais\b/gi, "je souhaiterais"],
+      [/\bsalut\b/gi, "Madame, Monsieur"],
+      [/\bmerci beaucoup\b/gi, "je vous prie d'agréer, Madame, Monsieur, mes salutations distinguées"],
+      [/\btu\b/gi, "vous"],
+      [/\bton\b/gi, "votre"],
+      [/\bta\b/gi, "votre"],
+      [/\btes\b/gi, "vos"],
+    ],
+  },
+};
+
+// Exposé globalement pour être utilisé par correction-engine.js sans bundler.
+window.PLUME_RULES_FR = {
+  CONFUSIONS,
+  TYPOGRAPHIE,
+  LEXIQUE_REGISTRE,
+  TON_CATEGORIE,
+};
