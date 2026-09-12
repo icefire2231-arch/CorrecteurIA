@@ -1,198 +1,106 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LexiPro Expert — Correcteur gratuit</title>
-<meta name="description" content="Correcteur, reformulateur et traducteur gratuit. Traitement local, sans compte ni abonnement.">
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-body{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-textarea{resize:vertical}
-.card{border:1px solid rgba(148,163,184,.2);background:rgba(15,23,42,.72);backdrop-filter:blur(12px)}
-.light body{background:#f8fafc;color:#0f172a}
-.tab.active{background:#2563eb;color:white}
-.error{background:#fee2e2;color:#991b1b;border-radius:4px;padding:1px 3px}
-.dark textarea,.dark select{background:#0f172a;color:#e2e8f0}
-</style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Plume — correction et traduction, sans limite</title>
+<meta name="description" content="Corrigez vos textes en français selon quatre registres et traduisez-les dans de nombreuses langues. Gratuit, sans compte, sans limite." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100">
-<header class="border-b border-slate-800">
-<div class="max-w-6xl mx-auto px-5 py-5 flex items-center justify-between gap-4">
-<div>
-<h1 class="text-2xl md:text-3xl font-black">LexiPro <span class="text-blue-400">Expert</span></h1>
-<p class="text-sm text-slate-400">Correction • Reformulation • Traduction</p>
-</div>
-<div class="flex items-center gap-2">
-<span class="text-xs px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400">100 % gratuit</span>
-<button id="themeBtn" class="px-3 py-2 rounded-lg bg-slate-800">☀️</button>
-</div>
-</div>
-</header>
+<body>
 
-<main class="max-w-6xl mx-auto px-5 py-7">
-<div class="flex flex-wrap gap-2 mb-5">
-<button class="tab active px-4 py-2 rounded-lg" data-tab="correction">Correction</button>
-<button class="tab px-4 py-2 rounded-lg bg-slate-800" data-tab="reformulation">Reformulation</button>
-<button class="tab px-4 py-2 rounded-lg bg-slate-800" data-tab="traduction">Traduction</button>
+<div class="atelier">
+
+  <aside class="pupitre">
+    <div class="marque">
+      <span class="marque-plume">✒</span>
+      <h1>Plume</h1>
+    </div>
+    <p class="marque-baseline">Correction &amp; traduction, à l'infini.</p>
+
+    <nav class="mode-switch" role="tablist" aria-label="Mode de travail">
+      <button class="mode-btn actif" data-mode="correction" role="tab" aria-selected="true">Corriger</button>
+      <button class="mode-btn" data-mode="traduction" role="tab" aria-selected="false">Traduire</button>
+    </nav>
+
+    <section class="controle" id="panneau-correction">
+      <div class="groupe">
+        <h2>Catégorie</h2>
+        <div class="options" data-groupe="categorie">
+          <button class="option actif" data-valeur="classique">Classique</button>
+          <button class="option" data-valeur="pro">Pro</button>
+          <button class="option" data-valeur="academique">Académique</button>
+          <button class="option" data-valeur="administratif">Administratif</button>
+        </div>
+        <p class="explication" id="explication-categorie">Un français correct et équilibré, sans jargon ni familiarité.</p>
+      </div>
+
+      <div class="groupe">
+        <h2>Registre</h2>
+        <div class="options" data-groupe="registre">
+          <button class="option" data-valeur="naturel">Naturel</button>
+          <button class="option actif" data-valeur="classique">Classique</button>
+          <button class="option" data-valeur="soutenu">Soutenu</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="controle" id="panneau-traduction" hidden>
+      <div class="groupe">
+        <h2>Depuis</h2>
+        <select id="langue-source" class="select-langue"></select>
+      </div>
+      <div class="groupe">
+        <h2>Vers</h2>
+        <select id="langue-cible" class="select-langue"></select>
+      </div>
+      <p class="explication">Traduction via un service public gratuit, sans compte requis.</p>
+    </section>
+
+    <footer class="pupitre-pied">
+      <p>100&nbsp;% gratuit · aucune inscription · vos textes restent dans votre navigateur pour la correction.</p>
+    </footer>
+  </aside>
+
+  <main class="page-principale">
+    <div class="page-papier">
+      <div class="page-entete">
+        <span id="compteur-mots">0 mot</span>
+        <button id="bouton-action" class="bouton-encre">Corriger le texte</button>
+      </div>
+      <div
+        id="zone-texte"
+        class="zone-texte"
+        contenteditable="true"
+        spellcheck="true"
+        lang="fr"
+        data-placeholder="Écrivez ou collez votre texte ici…"
+      ></div>
+    </div>
+
+    <div id="resultat-traduction-bloc" class="page-papier" hidden>
+      <div class="page-entete">
+        <span>Traduction</span>
+        <button id="bouton-copier-traduction" class="bouton-fantome">Copier</button>
+      </div>
+      <div id="resultat-traduction" class="zone-texte zone-lecture"></div>
+    </div>
+  </main>
+
+  <aside class="marge-annotations" id="marge-annotations" aria-live="polite">
+    <h2>Annotations</h2>
+    <p class="marge-vide" id="marge-vide">Cliquez sur « Corriger le texte » pour voir apparaître les remarques ici, dans la marge — comme sur un manuscrit relu à l'encre.</p>
+    <ul id="liste-annotations"></ul>
+  </aside>
+
 </div>
 
-<section id="correction" class="panel">
-<div class="grid lg:grid-cols-2 gap-5">
-<div class="card rounded-2xl p-5">
-<div class="flex justify-between items-center mb-3"><h2 class="font-bold text-lg">Votre texte</h2><span id="count1" class="text-xs text-slate-400">0 mot</span></div>
-<textarea id="input1" rows="16" class="w-full rounded-xl border border-slate-700 p-4 outline-none focus:ring-2 focus:ring-blue-500" placeholder="Écrivez ou collez votre texte ici..."></textarea>
-<div class="flex flex-wrap gap-2 mt-4">
-<button id="correctBtn" class="px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 font-bold">✓ Corriger</button>
-<button class="copyBtn px-4 py-3 rounded-xl bg-slate-800" data-id="input1">Copier</button>
-<button id="clear1" class="px-4 py-3 rounded-xl bg-slate-800">Effacer</button>
-</div>
-</div>
-<div class="card rounded-2xl p-5">
-<div class="flex justify-between items-center mb-3"><h2 class="font-bold text-lg">Résultat</h2><span id="score" class="text-xs text-slate-400"></span></div>
-<textarea id="output1" rows="16" readonly class="w-full rounded-xl border border-slate-700 p-4 outline-none" placeholder="Votre texte corrigé apparaîtra ici..."></textarea>
-<div id="report" class="mt-4 text-sm text-slate-300"></div>
-<button class="copyBtn mt-3 px-4 py-3 rounded-xl bg-slate-800" data-id="output1">Copier le résultat</button>
-</div>
-</div>
-</section>
-
-<section id="reformulation" class="panel hidden">
-<div class="card rounded-2xl p-5">
-<div class="grid md:grid-cols-2 gap-4 mb-4">
-<select id="tone" class="rounded-xl border border-slate-700 p-3"><option value="natural">Naturelle</option><option value="professional">Professionnelle</option><option value="academic">Universitaire</option><option value="simple">Simple</option><option value="concise">Concise</option><option value="formal">Soutenue</option></select>
-<select id="length" class="rounded-xl border border-slate-700 p-3"><option value="normal">Longueur normale</option><option value="short">Plus courte</option></select>
-</div>
-<textarea id="input2" rows="9" class="w-full rounded-xl border border-slate-700 p-4" placeholder="Texte à reformuler..."></textarea>
-<button id="rephraseBtn" class="mt-4 px-5 py-3 rounded-xl bg-blue-600 font-bold">Reformuler</button>
-<div id="rephraseOut" class="mt-5 grid gap-3"></div>
-</div>
-</section>
-
-<section id="traduction" class="panel hidden">
-<div class="card rounded-2xl p-5">
-<div class="grid md:grid-cols-2 gap-4 mb-4">
-<select id="from" class="rounded-xl border border-slate-700 p-3"><option value="fr">Français</option><option value="en">Anglais</option><option value="es">Espagnol</option><option value="de">Allemand</option><option value="it">Italien</option><option value="pt">Portugais</option></select>
-<select id="to" class="rounded-xl border border-slate-700 p-3"><option value="en">Anglais</option><option value="fr">Français</option><option value="es">Espagnol</option><option value="de">Allemand</option><option value="it">Italien</option><option value="pt">Portugais</option></select>
-</div>
-<textarea id="input3" rows="9" class="w-full rounded-xl border border-slate-700 p-4" placeholder="Texte à traduire..."></textarea>
-<button id="translateBtn" class="mt-4 px-5 py-3 rounded-xl bg-blue-600 font-bold">Traduire</button>
-<div id="translationOut" class="mt-5 whitespace-pre-wrap rounded-xl bg-slate-900 p-4 min-h-32"></div>
-<p id="translationNote" class="text-xs text-slate-500 mt-3"></p>
-</div>
-</section>
-
-<div class="mt-7 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 text-sm">
-<strong>🔒 Fonctionnement local :</strong> la correction et la reformulation de cette version ne nécessitent aucune clé API et n'utilisent aucun quota. Le site reste donc gratuit et illimité. La traduction intégrée utilise un petit dictionnaire local pour les expressions courantes ; elle n'est pas présentée comme une traduction IA complète.
-</div>
-</main>
-
-<footer class="max-w-6xl mx-auto px-5 pb-8 text-xs text-slate-500">LexiPro Expert — aucun abonnement, aucun système de crédits.</footer>
-
-<script>
-const $=id=>document.getElementById(id);
-const words=t=>(t.trim().match(/\b[\p{L}\p{M}'’-]+\b/gu)||[]);
-function count(id,out){$(out).textContent=words($(id).value).length+" mot"+(words($(id).value).length>1?"s":"")}
-function normalizeSpaces(s){return s.replace(/[ \t]+/g," ").replace(/ +([,;:!?])/g,"$1").replace(/([,;:!?])(?=[^\s])/g,"$1 ").replace(/\n +/g,"\n").trim()}
-function localCorrect(text){
- let s=normalizeSpaces(text), fixes=[];
- const rules=[
- [/(\b|^)sa va\b/gi,"$1ça va","« sa va » → « ça va »"],
- [/(\b|^)sa vas\b/gi,"$1ça va","« sa vas » → « ça va »"],
- [/\ba cote\b/gi,"à côté","« a cote » → « à côté »"],
- [/\ba l'?école\b/gi,"à l'école","« a l'école » → « à l'école »"],
- [/\bje suis aller\b/gi,"je suis allé","« je suis aller » → « je suis allé »"],
- [/\bje suis allez\b/gi,"je suis allé","« je suis allez » → « je suis allé »"],
- [/\bil est aller\b/gi,"il est allé","« il est aller » → « il est allé »"],
- [/\belle est aller\b/gi,"elle est allée","« elle est aller » → « elle est allée »"],
- [/\bnous sommes aller\b/gi,"nous sommes allés","« nous sommes aller » → « nous sommes allés »"],
- [/\bils sont aller\b/gi,"ils sont allés","« ils sont aller » → « ils sont allés »"],
- [/\bj'ai était\b/gi,"j'ai été","« j'ai était » → « j'ai été »"],
- [/\bcomme même\b/gi,"quand même","« comme même » → « quand même »"],
- [/\bmalgrès\b/gi,"malgré","« malgrès » → « malgré »"],
- [/\bparmis\b/gi,"parmi","« parmis » → « parmi »"],
- [/\bapparament\b/gi,"apparemment","« apparamment » → « apparemment »"],
- [/\bsa serait\b/gi,"ça serait","« sa serait » → « ça serait »"],
- [/\bsa fait\b/gi,"ça fait","« sa fait » → « ça fait »"],
- [/\bsa permet\b/gi,"ça permet","« sa permet » → « ça permet »"],
- [/\bsa montre\b/gi,"ça montre","« sa montre » → « ça montre »"],
- [/\bces derniers temps\b/gi,"ces derniers temps",""],
- [/\bau jour d'aujourd'hui\b/gi,"aujourd'hui","formulation allégée"],
- [/\bplus meilleur\b/gi,"meilleur","double comparatif"],
- [/\bmoins pire\b/gi,"moins mauvais","formulation corrigée"],
- [/\bmalgré que\b/gi,"bien que","« malgré que » → « bien que »"]
- ];
- for(const [re,rep,msg] of rules){if(re.test(s)){s=s.replace(re,rep); if(msg) fixes.push(msg)}}
- if(s && /^[a-zà-ÿ]/i.test(s)) s=s.charAt(0).toUpperCase()+s.slice(1);
- s=s.replace(/(^|[.!?]\s+)([a-zà-ÿ])/g,(m,a,b)=>a+b.toUpperCase());
- if(s && !/[.!?…]$/.test(s)) s+=".";
- return {s,fixes};
-}
-$("input1").addEventListener("input",()=>count("input1","count1"));
-$("correctBtn").onclick=()=>{
- const t=$("input1").value;
- if(!t.trim()){ $("report").textContent="Écrivez un texte pour commencer."; return}
- const r=localCorrect(t); $("output1").value=r.s;
- $("report").innerHTML=r.fixes.length?("✓ "+r.fixes.length+" correction(s) détectée(s)<br>"+r.fixes.map(x=>"• "+x).join("<br>")):"✓ Aucune erreur parmi les règles locales détectées.";
- $("score").textContent=r.fixes.length? "Texte amélioré":"Texte vérifié";
-};
-$("clear1").onclick=()=>{$("input1").value="";$("output1").value="";$("report").textContent="";$("score").textContent="";count("input1","count1")};
-
-function reformulate(t,tone,len){
- let s=localCorrect(t).s;
- if(tone==="professional") s=s.replace(/\bje pense que\b/gi,"je considère que").replace(/\bje veux\b/gi,"je souhaite").replace(/\bc'est\b/gi,"cela constitue").replace(/\btrès\b/gi,"particulièrement");
- if(tone==="academic") s=s.replace(/\bje pense que\b/gi,"il semble que").replace(/\bje trouve que\b/gi,"il apparaît que").replace(/\bmontrer\b/gi,"mettre en évidence").replace(/\btrès\b/gi,"particulièrement");
- if(tone==="simple") s=s.replace(/\bcependant\b/gi,"mais").replace(/\bnéanmoins\b/gi,"mais").replace(/\bafin de\b/gi,"pour");
- if(tone==="formal") s=s.replace(/\bje veux\b/gi,"je souhaite").replace(/\bfaire\b/gi,"réaliser").replace(/\bmontrer\b/gi,"mettre en évidence");
- if(tone==="concise"||len==="short"){
-   s=s.replace(/\bafin de\b/gi,"pour").replace(/\ben raison du fait que\b/gi,"car").replace(/\bau niveau de\b/gi,"dans").replace(/\bde manière à\b/gi,"pour");
-   const parts=s.split(/(?<=[.!?])\s+/); if(parts.length>3) s=parts.slice(0,Math.max(2,Math.ceil(parts.length*.65))).join(" ");
- }
- return s;
-}
-$("rephraseBtn").onclick=()=>{
- const t=$("input2").value.trim(); if(!t){$("rephraseOut").innerHTML='<p class="text-slate-400">Écrivez un texte pour commencer.</p>';return}
- const r=reformulate(t,$("tone").value,$("length").value);
- $("rephraseOut").innerHTML='<div class="rounded-xl border border-slate-700 p-4"><div class="text-xs text-blue-400 mb-2">Version proposée</div><div class="whitespace-pre-wrap">'+r.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))+'</div></div>';
-};
-
-const dict={
-fr:{en:{"bonjour":"hello","merci":"thank you","au revoir":"goodbye","oui":"yes","non":"no","je suis":"I am","j'aime":"I like","maison":"house","école":"school","travail":"work","aujourd'hui":"today","demain":"tomorrow","comment allez-vous":"how are you","je vais bien":"I am fine"},
-es:{"bonjour":"hola","merci":"gracias","au revoir":"adiós","oui":"sí","non":"no","je suis":"soy","j'aime":"me gusta","maison":"casa","école":"escuela","travail":"trabajo","aujourd'hui":"hoy","demain":"mañana"},
-de:{"bonjour":"hallo","merci":"danke","au revoir":"auf Wiedersehen","oui":"ja","non":"nein","maison":"Haus","école":"Schule","travail":"Arbeit"},
-it:{"bonjour":"ciao","merci":"grazie","au revoir":"arrivederci","oui":"sì","non":"no","maison":"casa","école":"scuola","travail":"lavoro"},
-pt:{"bonjour":"olá","merci":"obrigado","au revoir":"adeus","oui":"sim","non":"não","maison":"casa","école":"escola","travail":"trabalho"}},
-en:{fr:{"hello":"bonjour","thank you":"merci","goodbye":"au revoir","yes":"oui","no":"non","house":"maison","school":"école","work":"travail","today":"aujourd'hui"}},
-es:{fr:{"hola":"bonjour","gracias":"merci","adiós":"au revoir","sí":"oui","no":"non","casa":"maison","escuela":"école","trabajo":"travail"}},
-de:{fr:{"hallo":"bonjour","danke":"merci","ja":"oui","nein":"non","haus":"maison","schule":"école","arbeit":"travail"}},
-it:{fr:{"ciao":"bonjour","grazie":"merci","sì":"oui","no":"non","casa":"maison","scuola":"école","lavoro":"travail"}},
-pt:{fr:{"olá":"bonjour","obrigado":"merci","sim":"oui","não":"non","casa":"maison","escola":"école","trabalho":"travail"}}
-};
-function localTranslate(text,from,to){
- if(from===to)return text;
- let map=(dict[from]||{})[to];
- if(!map) return null;
- let out=text;
- Object.entries(map).sort((a,b)=>b[0].length-a[0].length).forEach(([a,b])=>out=out.replace(new RegExp("\\b"+a.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\b","gi"),b));
- return out;
-}
-$("translateBtn").onclick=()=>{
- const t=$("input3").value.trim(), from=$("from").value,to=$("to").value;
- if(!t){$("translationOut").textContent="Écrivez un texte pour commencer.";return}
- const r=localTranslate(t,from,to);
- $("translationOut").textContent=r||"Ce couple de langues n'est pas encore disponible dans le dictionnaire local. La traduction locale est volontairement limitée pour rester 100 % gratuite et sans serveur.";
- $("translationNote").textContent=r?"Traduction effectuée localement, sans API ni quota.":"Aucun service externe n'est appelé.";
-};
-
-document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
- document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
- document.querySelectorAll(".panel").forEach(x=>x.classList.add("hidden"));
- b.classList.add("active");$(b.dataset.tab).classList.remove("hidden");
-});
-document.querySelectorAll(".copyBtn").forEach(b=>b.onclick=async()=>{
- try{await navigator.clipboard.writeText($(b.dataset.id).value);b.textContent="✓ Copié";setTimeout(()=>b.textContent="Copier",1200)}catch(e){}
-});
-$("themeBtn").onclick=()=>{document.documentElement.classList.toggle("light");document.body.classList.toggle("bg-slate-950");document.body.classList.toggle("text-slate-100")};
-</script>
+<script src="js/rules-fr.js"></script>
+<script src="js/correction-engine.js"></script>
+<script src="js/translate.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
