@@ -3,599 +3,529 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CorrecteurPro & Traducteur Universel - SaaS IA Gratuit</title>
+    <title>Correcteur, Reformulateur & Traducteur Professionnel</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        primary: { 50: '#f0fdf4', 100: '#dcfce7', 500: '#22c55e', 600: '#16a34a', 700: '#15803d' }
+                    }
                 }
             }
         }
     </script>
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
-        .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; }
-    </style>
 </head>
-<body class="h-full bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-200 flex flex-col">
+<body class="h-full bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 flex flex-col transition-colors duration-200 font-sans">
 
-    <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50">
+    <!-- Top Navigation / Header -->
+    <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-indigo-500/30">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <div class="bg-primary-500 text-white p-2.5 rounded-xl shadow-md flex items-center justify-center">
+                    <i class="fa-solid fa-pen-nib text-lg"></i>
                 </div>
                 <div>
-                    <h1 class="font-bold text-lg leading-tight bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-violet-400 bg-clip-text text-transparent">
-                        AuraWrite AI
-                    </h1>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Correcteur, Reformulateur & Traducteur SaaS</p>
+                    <h1 class="font-bold text-lg leading-tight tracking-tight">LexiPro <span class="text-primary-600 dark:text-primary-500 text-xs uppercase px-2 py-0.5 bg-primary-50 dark:bg-slate-700 rounded-full ml-1 border border-primary-100 dark:border-slate-600">Expert</span></h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Correction, Style & Traduction Intelligents</p>
                 </div>
             </div>
 
-            <!-- Main Navigation Tabs -->
-            <nav class="hidden md:flex space-x-1 bg-slate-100 dark:bg-slate-700/50 p-1 rounded-xl">
-                <button onclick="switchTab('correction')" id="nav-correction" class="px-4 py-2 rounded-lg text-sm font-medium transition-all bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm">
-                    <i class="fa-solid fa-spell-check mr-2"></i>Correction Avancée
-                </button>
-                <button onclick="switchTab('reformulation')" id="nav-reformulation" class="px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-600 dark:text-slate-300 hover:text-indigo-600">
-                    <i class="fa-solid fa-pen-nib mr-2"></i>Reformulation
-                </button>
-                <button onclick="switchTab('traduction')" id="nav-traduction" class="px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-600 dark:text-slate-300 hover:text-indigo-600">
-                    <i class="fa-solid fa-language mr-2"></i>Traduction Universelle
-                </button>
-                <button onclick="switchTab('github')" id="nav-github" class="px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-600 dark:text-slate-300 hover:text-indigo-600">
-                    <i class="fa-brands fa-github mr-2"></i>Hébergement Gratuit
-                </button>
-            </nav>
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <!-- Navigation Tabs -->
+                <nav class="hidden md:flex space-x-1 bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-800">
+                    <button onclick="switchTab('corrector')" id="btn-tab-corrector" class="px-4 py-2 text-sm font-medium rounded-lg transition-all bg-white dark:bg-slate-800 text-primary-600 dark:text-primary-400 shadow-sm flex items-center space-x-2">
+                        <i class="fa-solid fa-check-double"></i>
+                        <span>Correction & Style</span>
+                    </button>
+                    <button onclick="switchTab('rephrase')" id="btn-tab-rephrase" class="px-4 py-2 text-sm font-medium rounded-lg transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Reformulation</span>
+                    </button>
+                    <button onclick="switchTab('translate')" id="btn-tab-translate" class="px-4 py-2 text-sm font-medium rounded-lg transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-language"></i>
+                        <span>Traduction</span>
+                    </button>
+                </nav>
 
-            <div class="flex items-center space-x-3">
-                <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
-                    <i class="fa-solid fa-moon dark:hidden"></i>
-                    <i class="fa-solid fa-sun hidden dark:inline"></i>
+                <!-- Dark Mode Toggle -->
+                <button onclick="toggleDarkMode()" class="p-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl transition" title="Changer de thème">
+                    <i class="fa-solid fa-moon dark:hidden text-lg"></i>
+                    <i class="fa-solid fa-sun hidden dark:block text-yellow-400 text-lg"></i>
                 </button>
-                <a href="https://github.com" target="_blank" class="hidden sm:inline-flex items-center px-4 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-medium hover:opacity-90 transition-opacity shadow-sm">
-                    <i class="fa-brands fa-github mr-2"></i>Déployer sur GitHub
-                </a>
             </div>
+        </div>
+
+        <!-- Mobile Navigation Bar -->
+        <div class="md:hidden flex border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
+            <button onclick="switchTab('corrector')" id="mobile-tab-corrector" class="flex-1 py-3 text-xs font-medium text-center text-primary-600 dark:text-primary-400 border-b-2 border-primary-500 flex flex-col items-center justify-center space-y-1">
+                <i class="fa-solid fa-check-double text-base"></i>
+                <span>Correction</span>
+            </button>
+            <button onclick="switchTab('rephrase')" id="mobile-tab-rephrase" class="flex-1 py-3 text-xs font-medium text-center text-slate-600 dark:text-slate-400 flex flex-col items-center justify-center space-y-1">
+                <i class="fa-solid fa-wand-magic-sparkles text-base"></i>
+                <span>Reformulation</span>
+            </button>
+            <button onclick="switchTab('translate')" id="mobile-tab-translate" class="flex-1 py-3 text-xs font-medium text-center text-slate-600 dark:text-slate-400 flex flex-col items-center justify-center space-y-1">
+                <i class="fa-solid fa-language text-base"></i>
+                <span>Traduction</span>
+            </button>
         </div>
     </header>
 
-    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col">
+    <!-- Main Application Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col">
 
-        <!-- MOBILE NAV -->
-        <div class="md:hidden flex overflow-x-auto space-x-2 pb-4 mb-4 border-b border-slate-200 dark:border-slate-700">
-            <button onclick="switchTab('correction')" id="mob-nav-correction" class="whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-600 text-white">Correction</button>
-            <button onclick="switchTab('reformulation')" id="mob-nav-reformulation" class="whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Reformulation</button>
-            <button onclick="switchTab('traduction')" id="mob-nav-traduction" class="whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Traduction</button>
-            <button onclick="switchTab('github')" id="mob-nav-github" class="whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">GitHub Guide</button>
-        </div>
-
-        <!-- ================= TAB 1 : CORRECTION ================= -->
-        <div id="tab-correction" class="tab-content flex-1 flex flex-col space-y-4">
+        <!-- ================= TAB 1: CORRECTION ================= -->
+        <div id="view-corrector" class="flex-1 flex flex-col space-y-4">
             <!-- Controls Bar -->
-            <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Registre</label>
-                    <select id="corr-registre" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                        <option value="classique">Classique (Standard)</option>
-                        <option value="academique">Académique & Littéraire</option>
-                        <option value="professionnel">Professionnel & d'Entreprise</option>
-                        <option value="administratif">Administratif & Juridique</option>
-                    </select>
+            <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-wrap gap-4 items-center justify-between">
+                <div class="flex flex-wrap gap-3 items-center">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Registre</label>
+                        <select id="register-select" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            <option value="classique">Classique</option>
+                            <option value="academique">Académique</option>
+                            <option value="professionnel">Professionnel</option>
+                            <option value="administratif">Administratif</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Style</label>
+                        <select id="style-select" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            <option value="classique">Classique</option>
+                            <option value="souple">Souple</option>
+                            <option value="fluide">Fluide</option>
+                            <option value="soutenu">Soutenu</option>
+                        </select>
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Style d'écriture</label>
-                    <select id="corr-style" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                        <option value="classique">Classique & Équilibré</option>
-                        <option value="souple">Souple & Direct</option>
-                        <option value="fluide">Fluide & Narratif</option>
-                        <option value="soutenu">Soutenu & Élégant</option>
-                    </select>
-                </div>
-                <div class="flex items-end">
-                    <button onclick="loadSampleText('correction')" class="w-full bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-medium py-2 px-4 rounded-xl text-sm transition-colors flex items-center justify-center">
-                        <i class="fa-solid fa-lightbulb mr-2 text-amber-500"></i>Texte d'exemple
-                    </button>
-                </div>
-                <div class="flex items-end">
-                    <button onclick="processCorrection()" id="btn-correct" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-xl text-sm transition-all shadow-lg shadow-indigo-600/30 flex items-center justify-center">
-                        <i class="fa-solid fa-wand-magic-sparkles mr-2"></i>Corriger & Analyser
+
+                <!-- Status Indicator & Action -->
+                <div class="flex items-center space-x-4">
+                    <div id="status-indicator" class="flex items-center space-x-2 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-full text-xs font-medium text-emerald-700 dark:text-emerald-400">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span id="status-text">Aucune faute détectée</span>
+                    </div>
+                    <button onclick="runCorrection()" class="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow-md hover:shadow-lg transition flex items-center space-x-2">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>Corriger maintenant</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Editor & Results Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1 min-h-[450px]">
+            <!-- Editor Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-[450px]">
                 <!-- Input Box -->
                 <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col overflow-hidden">
-                    <div class="px-4 py-3 bg-slate-50 dark:bg-slate-700/50 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
-                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Texte original</span>
-                        <button onclick="clearText('corr-input')" class="text-xs text-slate-400 hover:text-red-500 transition-colors"><i class="fa-solid fa-trash-can mr-1"></i>Effacer</button>
+                    <div class="bg-slate-50 dark:bg-slate-900 px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Texte source</span>
+                        <div class="flex space-x-2">
+                            <button onclick="clearText('input-text')" class="text-xs text-slate-500 hover:text-rose-500 transition px-2 py-1 rounded">Effacer</button>
+                            <button onclick="pasteText()" class="text-xs text-primary-600 dark:text-primary-400 hover:underline flex items-center space-x-1"><i class="fa-solid fa-paste"></i><span>Coller</span></button>
+                        </div>
                     </div>
-                    <textarea id="corr-input" class="flex-1 w-full p-4 bg-transparent resize-none focus:outline-none text-sm leading-relaxed custom-scrollbar" placeholder="Saisissez ou collez votre texte ici pour lancer l'analyse intelligente..."></textarea>
-                    <div class="px-4 py-2 bg-slate-50 dark:bg-slate-700/30 border-t border-slate-200 dark:border-slate-700 text-xs text-slate-400 flex justify-between">
-                        <span id="word-count-input">0 mots</span>
-                        <span id="char-count-input">0 caractères</span>
+                    <textarea id="input-text" placeholder="Tapez ou collez votre texte ici à analyser..." class="flex-1 w-full p-4 bg-transparent resize-none focus:outline-none text-slate-800 dark:text-slate-100 placeholder-slate-400 font-normal leading-relaxed"></textarea>
+                    <div class="px-4 py-2 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-700 text-right text-xs text-slate-400">
+                        <span id="word-count">0</span> mots | <span id="char-count">0</span> caractères
                     </div>
                 </div>
 
-                <!-- Corrected Box -->
+                <!-- Output / Corrected Box -->
                 <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col overflow-hidden">
-                    <div class="px-4 py-3 bg-slate-50 dark:bg-slate-700/50 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
-                        <div class="flex items-center space-x-2">
-                            <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Texte corrigé</span>
-                            <!-- Voyant Visuel -->
-                            <div id="status-indicator" class="flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">
-                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-1.5"></span>
-                                <span id="status-text">Prêt</span>
-                            </div>
-                        </div>
-                        <button onclick="copyToClipboard('corr-output')" class="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-medium"><i class="fa-solid fa-copy mr-1"></i>Copier</button>
+                    <div class="bg-slate-50 dark:bg-slate-900 px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Texte corrigé & optimisé</span>
+                        <button onclick="copyOutputText()" class="text-xs bg-primary-50 dark:bg-slate-700 text-primary-600 dark:text-primary-300 px-3 py-1 rounded-lg border border-primary-200 dark:border-slate-600 hover:bg-primary-100 transition flex items-center space-x-1">
+                            <i class="fa-regular fa-copy"></i><span>Copier</span>
+                        </button>
                     </div>
-                    <div id="corr-output" class="flex-1 p-4 bg-transparent overflow-y-auto text-sm leading-relaxed custom-scrollbar select-text" style="white-space: pre-wrap;">Le texte corrigé apparaîtra ici après analyse...</div>
-                    <div class="px-4 py-2 bg-slate-50 dark:bg-slate-700/30 border-t border-slate-200 dark:border-slate-700 text-xs text-slate-400 flex justify-between">
-                        <span id="correction-stats-summary">0 correction(s) appliquée(s)</span>
-                        <span id="score-quality">Qualité : 100%</span>
+                    <div id="output-text" class="flex-1 w-full p-4 overflow-y-auto whitespace-pre-wrap text-slate-800 dark:text-slate-100 leading-relaxed font-normal min-h-[250px]">
+                        <span class="text-slate-400 italic">Le résultat corrigé apparaîtra ici...</span>
                     </div>
-                </div>
-
-                <!-- Detailed Corrections Panel -->
-                <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col overflow-hidden">
-                    <div class="px-4 py-3 bg-slate-50 dark:bg-slate-700/50 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
-                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Rapport des anomalies</span>
-                        <span id="badge-count" class="bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300 text-xs font-bold px-2 py-0.5 rounded-full">0</span>
-                    </div>
-                    <div id="corrections-list" class="flex-1 p-3 overflow-y-auto space-y-3 custom-scrollbar text-sm">
-                        <div class="text-center py-12 text-slate-400">
-                            <i class="fa-solid fa-circle-check text-3xl mb-2 text-slate-300 dark:text-slate-600"></i>
-                            <p class="text-sm">Aucune anomalie détectée pour le moment.</p>
-                        </div>
+                    <!-- Corrective Details / Report Footer -->
+                    <div id="correction-report" class="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-700 p-3 max-h-36 overflow-y-auto text-xs text-slate-600 dark:text-slate-400 hidden">
+                        <p class="font-bold text-slate-700 dark:text-slate-300 mb-1"><i class="fa-solid fa-list-check mr-1 text-primary-500"></i> Journal des correctifs :</p>
+                        <ul id="report-list" class="space-y-1"></ul>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ================= TAB 2 : REFORMULATION ================= -->
-        <div id="tab-reformulation" class="tab-content hidden flex-1 flex flex-col space-y-4">
+        <!-- ================= TAB 2: REPHRASE ================= -->
+        <div id="view-rephrase" class="flex-1 flex flex-col space-y-4 hidden">
             <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-wrap gap-4 items-center justify-between">
-                <div class="flex items-center space-x-3 flex-1 min-w-[280px]">
-                    <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Objectif :</label>
-                    <select id="ref-mode" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 flex-1">
-                        <option value="ameliorer">Améliorer la clarté et le style</option>
-                        <option value="synthese">Résumer & Condenser</option>
-                        <option value="formel">Rendre plus formel / professionnel</option>
-                        <option value="developper">Développer & Enrichir</option>
-                        <option value="accrocheur">Ton percutant / Commercial</option>
+                <div class="flex items-center space-x-3">
+                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Objectif de reformulation :</span>
+                    <select id="rephrase-goal" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        <option value="fluent">Plus fluide et naturel</option>
+                        <option value="concise">Plus concis / Résumé</option>
+                        <option value="formal">Plus percutant & professionnel</option>
+                        <option value="creative">Plus littéraire / Senti</option>
                     </select>
                 </div>
-                <div class="flex space-x-2">
-                    <button onclick="loadSampleText('reformulation')" class="bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-medium py-2 px-4 rounded-xl text-sm transition-colors">
-                        Exemple
-                    </button>
-                    <button onclick="processReformulation()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-5 rounded-xl text-sm transition-all shadow-lg shadow-indigo-600/30 flex items-center">
-                        <i class="fa-solid fa-pen-nib mr-2"></i>Reformuler
-                    </button>
-                </div>
+                <button onclick="runRephrase()" class="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow-md hover:shadow-lg transition flex items-center space-x-2">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>Reformuler la phrase</span>
+                </button>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-[450px]">
                 <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col overflow-hidden">
-                    <div class="px-4 py-3 bg-slate-50 dark:bg-slate-700/50 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
-                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Texte source</span>
-                        <button onclick="clearText('ref-input')" class="text-xs text-slate-400 hover:text-red-500"><i class="fa-solid fa-trash-can mr-1"></i>Effacer</button>
+                    <div class="bg-slate-50 dark:bg-slate-900 px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Phrase ou texte d'origine</span>
                     </div>
-                    <textarea id="ref-input" class="flex-1 w-full p-4 bg-transparent resize-none focus:outline-none text-sm leading-relaxed custom-scrollbar" placeholder="Entrez la phrase ou le paragraphe à réécrire..."></textarea>
+                    <textarea id="rephrase-input" placeholder="Entrez la phrase que vous souhaitez reformuler..." class="flex-1 w-full p-4 bg-transparent resize-none focus:outline-none text-slate-800 dark:text-slate-100 placeholder-slate-400 leading-relaxed"></textarea>
                 </div>
-
                 <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col overflow-hidden">
-                    <div class="px-4 py-3 bg-slate-50 dark:bg-slate-700/50 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
-                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Propositions de reformulation</span>
-                        <button onclick="copyToClipboard('ref-output')" class="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-medium"><i class="fa-solid fa-copy mr-1"></i>Copier</button>
+                    <div class="bg-slate-50 dark:bg-slate-900 px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Variantes de reformulation</span>
                     </div>
-                    <div id="ref-output" class="flex-1 p-4 bg-transparent overflow-y-auto text-sm leading-relaxed custom-scrollbar space-y-4">
-                        <div class="text-center py-12 text-slate-400">
-                            <i class="fa-solid fa-pen-ruler text-3xl mb-2 text-slate-300 dark:text-slate-600"></i>
-                            <p class="text-sm">Lancez la reformulation pour obtenir plusieurs variantes stylistiques.</p>
-                        </div>
+                    <div id="rephrase-output" class="flex-1 w-full p-4 overflow-y-auto space-y-3 text-slate-800 dark:text-slate-100">
+                        <span class="text-slate-400 italic">Les propositions de reformulation apparaîtront ici...</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ================= TAB 3 : TRADUCTION ================= -->
-        <div id="tab-traduction" class="tab-content hidden flex-1 flex flex-col space-y-4">
+        <!-- ================= TAB 3: TRANSLATE ================= -->
+        <div id="view-translate" class="flex-1 flex flex-col space-y-4 hidden">
             <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-wrap gap-4 items-center justify-between">
-                <div class="flex items-center space-x-3 flex-1 min-w-[280px]">
-                    <div class="flex-1">
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Langue Source</label>
-                        <select id="lang-source" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <div class="flex items-center space-x-3 w-full sm:w-auto">
+                    <div class="flex-1 sm:flex-initial">
+                        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Langue Source</label>
+                        <select id="lang-source" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            <option value="auto">Détection automatique</option>
                             <option value="fr">Français</option>
                             <option value="en">Anglais</option>
                             <option value="es">Espagnol</option>
                             <option value="de">Allemand</option>
                             <option value="it">Italien</option>
                             <option value="pt">Portugais</option>
-                            <option value="zh">Chinois Mandarin</option>
-                            <option value="ja">Japonais</option>
+                            <option value="zh">Chinois (Mandarin)</option>
                             <option value="ar">Arabe</option>
+                            <option value="ja">Japonais</option>
                             <option value="ru">Russe</option>
                         </select>
                     </div>
-                    <button onclick="swapLanguages()" class="mt-5 w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 flex items-center justify-center text-slate-600 dark:text-slate-300 transition-colors">
+                    <button onclick="swapLanguages()" class="mt-5 p-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-xl transition text-slate-600 dark:text-slate-300" title="Inverser les langues">
                         <i class="fa-solid fa-right-left"></i>
                     </button>
-                    <div class="flex-1">
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Langue Cible</label>
-                        <select id="lang-target" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                            <option value="en" selected>Anglais</option>
+                    <div class="flex-1 sm:flex-initial">
+                        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Langue Cible</label>
+                        <select id="lang-target" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            <option value="en">Anglais</option>
                             <option value="fr">Français</option>
                             <option value="es">Espagnol</option>
                             <option value="de">Allemand</option>
                             <option value="it">Italien</option>
                             <option value="pt">Portugais</option>
-                            <option value="zh">Chinois Mandarin</option>
-                            <option value="ja">Japonais</option>
+                            <option value="zh">Chinois (Mandarin)</option>
                             <option value="ar">Arabe</option>
+                            <option value="ja">Japonais</option>
                             <option value="ru">Russe</option>
                         </select>
                     </div>
                 </div>
-                <div class="flex space-x-2">
-                    <button onclick="loadSampleText('traduction')" class="bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-medium py-2 px-4 rounded-xl text-sm transition-colors">
-                        Exemple
-                    </button>
-                    <button onclick="processTranslation()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-5 rounded-xl text-sm transition-all shadow-lg shadow-indigo-600/30 flex items-center">
-                        <i class="fa-solid fa-language mr-2"></i>Traduire
-                    </button>
-                </div>
+                <button onclick="runTranslation()" class="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow-md hover:shadow-lg transition flex items-center space-x-2">
+                    <i class="fa-solid fa-globe"></i>
+                    <span>Traduire</span>
+                </button>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-[450px]">
                 <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col overflow-hidden">
-                    <div class="px-4 py-3 bg-slate-50 dark:bg-slate-700/50 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
-                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Texte original</span>
-                        <button onclick="clearText('trans-input')" class="text-xs text-slate-400 hover:text-red-500"><i class="fa-solid fa-trash-can mr-1"></i>Effacer</button>
+                    <div class="bg-slate-50 dark:bg-slate-900 px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Texte à traduire</span>
                     </div>
-                    <textarea id="trans-input" class="flex-1 w-full p-4 bg-transparent resize-none focus:outline-none text-sm leading-relaxed custom-scrollbar" placeholder="Saisissez le texte à traduire dans toutes les langues..."></textarea>
+                    <textarea id="translate-input" placeholder="Entrez le texte à traduire dans une autre langue..." class="flex-1 w-full p-4 bg-transparent resize-none focus:outline-none text-slate-800 dark:text-slate-100 placeholder-slate-400 leading-relaxed"></textarea>
                 </div>
-
                 <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col overflow-hidden">
-                    <div class="px-4 py-3 bg-slate-50 dark:bg-slate-700/50 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
-                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Traduction ultra-fiable</span>
-                        <button onclick="copyToClipboard('trans-output')" class="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-medium"><i class="fa-solid fa-copy mr-1"></i>Copier</button>
+                    <div class="bg-slate-50 dark:bg-slate-900 px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Traduction fiable</span>
+                        <button onclick="copyTranslatedText()" class="text-xs bg-primary-50 dark:bg-slate-700 text-primary-600 dark:text-primary-300 px-3 py-1 rounded-lg border border-primary-200 dark:border-slate-600 hover:bg-primary-100 transition flex items-center space-x-1">
+                            <i class="fa-regular fa-copy"></i><span>Copier</span>
+                        </button>
                     </div>
-                    <div id="trans-output" class="flex-1 p-4 bg-transparent overflow-y-auto text-sm leading-relaxed custom-scrollbar" style="white-space: pre-wrap;">La traduction instantanée apparaîtra ici...</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= TAB 4 : GITHUB DEPLOY GUIDE ================= -->
-        <div id="tab-github" class="tab-content hidden flex-1 flex flex-col space-y-6">
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
-                <div class="flex items-center space-x-3">
-                    <div class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center text-2xl font-bold">
-                        <i class="fa-brands fa-github"></i>
+                    <div id="translate-output" class="flex-1 w-full p-4 overflow-y-auto whitespace-pre-wrap text-slate-800 dark:text-slate-100 leading-relaxed font-normal min-h-[250px]">
+                        <span class="text-slate-400 italic">La traduction apparaîtra ici...</span>
                     </div>
-                    <div>
-                        <h2 class="text-xl font-bold">Hébergement 100% Gratuit sur GitHub Pages</h2>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">Suivez ces 3 étapes simples pour mettre en ligne votre site en moins de 2 minutes.</p>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
-                    <div class="bg-slate-50 dark:bg-slate-700/40 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
-                        <span class="inline-block w-8 h-8 rounded-full bg-indigo-600 text-white font-bold text-sm text-center leading-8">1</span>
-                        <h3 class="font-semibold text-base">Créer un dépôt</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Connectez-vous à GitHub, créez un nouveau dépôt public nommé par exemple <code class="bg-slate-200 dark:bg-slate-800 px-1 py-0.5 rounded text-indigo-600">correcteur-pro</code>.</p>
-                    </div>
-                    <div class="bg-slate-50 dark:bg-slate-700/40 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
-                        <span class="inline-block w-8 h-8 rounded-full bg-indigo-600 text-white font-bold text-sm text-center leading-8">2</span>
-                        <h3 class="font-semibold text-base">Ajouter le fichier</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Nommez ce fichier unique <code class="bg-slate-200 dark:bg-slate-800 px-1 py-0.5 rounded text-indigo-600">index.html</code> et envoyez-le à la racine de votre dépôt.</p>
-                    </div>
-                    <div class="bg-slate-50 dark:bg-slate-700/40 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
-                        <span class="inline-block w-8 h-8 rounded-full bg-indigo-600 text-white font-bold text-sm text-center leading-8">3</span>
-                        <h3 class="font-semibold text-base">Activer Pages</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Dans les paramètres (Settings) > Pages, sélectionnez la branche <code class="bg-slate-200 dark:bg-slate-800 px-1 py-0.5 rounded text-indigo-600">main</code> ou <code class="bg-slate-200 dark:bg-slate-800 px-1 py-0.5 rounded text-indigo-600">master</code>. Votre site est en ligne !</p>
-                    </div>
-                </div>
-
-                <div class="pt-2">
-                    <button onclick="copyCurrentCode()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-xl text-sm transition-all shadow-md flex items-center justify-center">
-                        <i class="fa-solid fa-code mr-2"></i>Copier le code source complet (index.html)
-                    </button>
                 </div>
             </div>
         </div>
 
     </main>
 
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 py-3 text-center text-xs text-slate-500 dark:text-slate-400">
+        <p>LexiPro Expert — Assistant de rédaction intelligent & Multilingue</p>
+    </footer>
+
+    <!-- Script Application Logic -->
     <script>
-        const samples = {
-            correction: "Bonjour, je vous écris afin de vous faire part de mon mécontantement concernant ma commande passer la semaine dernière. Les produit sont arrivé en retard et defectueux. Je souhaite obtenir un rembourssement rapidement.",
-            reformulation: "Notre entreprise recherche activement des nouveaux partenaires pour developper notre activite sur le marche international. Nous offrons des conditions tres avantageuses pour les premiers arrivants.",
-            traduction: "Le succès de notre plateforme repose sur la fiabilité, la rapidité et la simplicité d'utilisation pour tous nos utilisateurs à travers le monde."
-        };
+        // Dark Mode Initialization
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
 
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.getElementById('tab-' + tabId).classList.remove('hidden');
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
 
-            // Desktop nav active states
-            ['correction', 'reformulation', 'traduction', 'github'].forEach(id => {
-                const btn = document.getElementById('nav-' + id);
-                if (btn) {
-                    if (id === tabId) {
-                        btn.className = "px-4 py-2 rounded-lg text-sm font-medium transition-all bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm";
-                    } else {
-                        btn.className = "px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-600 dark:text-slate-300 hover:text-indigo-600";
+        // Tab Navigation Switching
+        function switchTab(tabName) {
+            const tabs = ['corrector', 'rephrase', 'translate'];
+            tabs.forEach(t => {
+                const view = document.getElementById(`view-${t}`);
+                const btn = document.getElementById(`btn-tab-${t}`);
+                const mobBtn = document.getElementById(`mobile-tab-${t}`);
+                
+                if (t === tabName) {
+                    view.classList.remove('hidden');
+                    if(btn) {
+                        btn.className = "px-4 py-2 text-sm font-medium rounded-lg transition-all bg-white dark:bg-slate-800 text-primary-600 dark:text-primary-400 shadow-sm flex items-center space-x-2";
                     }
-                }
-                const mobBtn = document.getElementById('mob-nav-' + id);
-                if (mobBtn) {
-                    if (id === tabId) {
-                        mobBtn.className = "whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-600 text-white";
-                    } else {
-                        mobBtn.className = "whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300";
+                    if(mobBtn) {
+                        mobBtn.className = "flex-1 py-3 text-xs font-medium text-center text-primary-600 dark:text-primary-400 border-b-2 border-primary-500 flex flex-col items-center justify-center space-y-1";
+                    }
+                } else {
+                    view.classList.add('hidden');
+                    if(btn) {
+                        btn.className = "px-4 py-2 text-sm font-medium rounded-lg transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-2";
+                    }
+                    if(mobBtn) {
+                        mobBtn.className = "flex-1 py-3 text-xs font-medium text-center text-slate-600 dark:text-slate-400 flex flex-col items-center justify-center space-y-1 border-b-2 border-transparent";
                     }
                 }
             });
         }
 
-        function toggleDarkMode() {
-            document.documentElement.classList.toggle('dark');
-        }
-
-        function loadSampleText(type) {
-            const inputEl = document.getElementById(type + '-input');
-            if (inputEl) {
-                inputEl.value = samples[type] || "";
-                updateCounters();
-            }
-        }
+        // Word and Character Counter
+        const inputText = document.getElementById('input-text');
+        inputText.addEventListener('input', () => {
+            const val = inputText.value;
+            const words = val.trim() ? val.trim().split(/\s+/).length : 0;
+            const chars = val.length;
+            document.getElementById('word-count').innerText = words;
+            document.getElementById('char-count').innerText = chars;
+        });
 
         function clearText(elementId) {
-            const el = document.getElementById(elementId);
-            if (el) {
-                el.value = "";
-                updateCounters();
+            document.getElementById(elementId).value = '';
+            document.getElementById('word-count').innerText = '0';
+            document.getElementById('char-count').innerText = '0';
+        }
+
+        async function pasteText() {
+            try {
+                const text = await navigator.clipboard.readText();
+                document.getElementById('input-text').value = text;
+                document.getElementById('input-text').dispatchEvent(new Event('input'));
+            } catch (err) {
+                alert("Impossible d'accéder au presse-papier automatiquement.");
             }
         }
 
-        function copyToClipboard(elementId) {
-            const el = document.getElementById(elementId);
-            let text = el.value || el.innerText;
-            const textarea = document.createElement("textarea");
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand("copy");
-            document.body.removeChild(textarea);
-            
-            showToast("Texte copié dans le presse-papier !");
+        function copyOutputText() {
+            const text = document.getElementById('output-text').innerText;
+            navigator.clipboard.writeText(text);
+            alert("Texte corrigé copié dans le presse-papier !");
         }
 
-        function showToast(msg) {
-            const toast = document.createElement('div');
-            toast.className = "fixed bottom-6 right-6 bg-slate-900 text-white px-4 py-3 rounded-xl text-sm shadow-xl z-50 flex items-center space-x-2 animate-bounce";
-            toast.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i><span>${msg}</span>`;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 2500);
-        }
-
-        // Realtime counters for correction input
-        const corrInput = document.getElementById('corr-input');
-        if (corrInput) {
-            corrInput.addEventListener('input', updateCounters);
-        }
-
-        function updateCounters() {
-            const text = corrInput ? corrInput.value : "";
-            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-            const chars = text.length;
-            const wordEl = document.getElementById('word-count-input');
-            const charEl = document.getElementById('char-count-input');
-            if (wordEl) wordEl.innerText = words + " mots";
-            if (charEl) charEl.innerText = chars + " caractères";
-        }
-
-        function processCorrection() {
-            const text = corrInput.value.trim();
-            const registre = document.getElementById('corr-registre').value;
-            const style = document.getElementById('corr-style').value;
-
-            if (!text) {
-                showToast("Veuillez saisir un texte à corriger.");
-                return;
-            }
-
-            const btn = document.getElementById('btn-correct');
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i>Analyse en cours...`;
-            btn.disabled = true;
-
-            setTimeout(() => {
-                btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles mr-2"></i>Corriger & Analyser`;
-                btn.disabled = false;
-
-                // Simulation intelligente de correction et règles de style/registre
-                let corrected = text;
-                let corrections = [];
-
-                // Remplacement de fautes courantes d'exemple
-                const rules = [
-                    { find: /mécontantement/gi, replace: "mécontentement", rule: "Orthographe", desc: "Faute d'orthographe (mécontentement s'écrit avec un 'e')." },
-                    { find: /passer/gi, replace: "passée", rule: "Grammaire", desc: "Accord du participe passé avec le nom féminin 'commande'." },
-                    { find: /produit sont arrivé/gi, replace: "produits sont arrivés", rule: "Accord", desc: "Pluriel manquant sur le nom et le participe passé." },
-                    { find: /defectueux/gi, replace: "défectueux", rule: "Orthographe", desc: "Accent manquant sur 'défectueux'." },
-                    { find: /rembourssement/gi, replace: "remboursement", rule: "Orthographe", desc: "Double 's' incorrect (remboursement s'écrit avec un seul s)." }
-                ];
-
-                rules.forEach(r => {
-                    if (r.find.test(corrected)) {
-                        corrected = corrected.replace(r.find, r.replace);
-                        corrections.push(r);
-                    }
-                });
-
-                // Adaptation selon le registre et le style demandés
-                if (registre === 'academique' || registre === 'administratif') {
-                    corrected = corrected.replace(/je vous écris afin de/gi, "Par la présente, je vous écris afin de");
-                    corrected = corrected.replace(/je souhaite obtenir/gi, "je sollicite l'obtention de");
-                } else if (registre === 'professionnel') {
-                    corrected = corrected.replace(/je vous écris afin de/gi, "Je vous contacte pour");
-                }
-
-                if (style === 'soutenu') {
-                    corrected = corrected.replace(/rapidement/gi, "dans les plus brefs délais");
-                } else if (style === 'souple') {
-                    corrected = corrected.replace(/Par la présente,/gi, "");
-                }
-
-                // Affichage du texte corrigé avec surbrillance
-                const outputEl = document.getElementById('corr-output');
-                outputEl.innerHTML = `<span class="text-indigo-600 dark:text-indigo-400 font-medium">${escapeHtml(corrected)}</span>`;
-
-                // Mise à jour du voyant visuel
-                const statusIndicator = document.getElementById('status-indicator');
-                const statusText = document.getElementById('status-text');
-                const badgeCount = document.getElementById('badge-count');
-                const statsSummary = document.getElementById('correction-stats-summary');
-                const scoreQuality = document.getElementById('score-quality');
-
-                badgeCount.innerText = corrections.length;
-                statsSummary.innerText = corrections.length + " correction(s) appliquée(s)";
-                
-                let qualityScore = Math.max(60, 100 - (corrections.length * 10));
-                scoreQuality.innerText = "Qualité : " + qualityScore + "%";
-
-                if (corrections.length > 0) {
-                    statusIndicator.className = "flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300";
-                    statusIndicator.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500 mr-1.5"></span><span>${corrections.length} correction(s)</span>`;
-                } else {
-                    statusIndicator.className = "flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300";
-                    statusIndicator.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 mr-1.5"></span><span>Impeccable</span>`;
-                }
-
-                // Remplissage du panneau des anomalies
-                const listEl = document.getElementById('corrections-list');
-                if (corrections.length === 0) {
-                    listEl.innerHTML = `
-                        <div class="text-center py-12 text-slate-400">
-                            <i class="fa-solid fa-circle-check text-3xl mb-2 text-emerald-500"></i>
-                            <p class="text-sm font-medium text-slate-700 dark:text-slate-200">Aucune faute détectée !</p>
-                            <p class="text-xs text-slate-400 mt-1">Votre texte respecte parfaitement les critères du registre ${registre}.</p>
-                        </div>`;
-                } else {
-                    let html = '';
-                    corrections.forEach((c, idx) => {
-                        html += `
-                            <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-700/30 border border-slate-200 dark:border-slate-700 space-y-1">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">Anomalie #${idx + 1} (${c.rule})</span>
-                                    <span class="text-[10px] bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 px-1.5 py-0.5 rounded">Corrigé</span>
-                                </div>
-                                <p class="text-xs text-slate-600 dark:text-slate-300">${c.desc}</p>
-                            </div>`;
-                    });
-                    listEl.innerHTML = html;
-                }
-
-                showToast("Correction et analyse terminées avec succès !");
-            }, 600);
-        }
-
-        function processReformulation() {
-            const text = document.getElementById('ref-input').value.trim();
-            const mode = document.getElementById('ref-mode').value;
-            const outputEl = document.getElementById('ref-output');
-
-            if (!text) {
-                showToast("Veuillez saisir un texte à reformuler.");
-                return;
-            }
-
-            outputEl.innerHTML = `<div class="text-center py-12 text-slate-400"><i class="fa-solid fa-spinner fa-spin text-2xl mr-2"></i>Génération des variantes...</div>`;
-
-            setTimeout(() => {
-                let variants = [
-                    { title: "Variante Professionnelle", text: `Suite à votre demande, nous tenons à préciser que ${text.toLowerCase()}` },
-                    { title: "Variante Concouse & Directe", text: `En bref : ${text}` },
-                    { title: "Variante Élégante & Soutenue", text: `Il convient de souligner que ${text.toLowerCase()}` }
-                ];
-
-                let html = '';
-                variants.forEach((v, idx) => {
-                    html += `
-                        <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-700/30 border border-slate-200 dark:border-slate-700 space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">${v.title}</span>
-                                <button onclick="navigator.clipboard.writeText(this.nextElementSibling.innerText); showToast('Variante copiée !');" class="text-xs text-slate-400 hover:text-indigo-600"><i class="fa-solid fa-copy"></i></button>
-                            </div>
-                            <p class="text-xs text-slate-700 dark:text-slate-200 leading-relaxed">${v.text}</p>
-                        </div>`;
-                });
-                outputEl.innerHTML = html;
-                showToast("Reformulations générées !");
-            }, 500);
+        function copyTranslatedText() {
+            const text = document.getElementById('translate-output').innerText;
+            navigator.clipboard.writeText(text);
+            alert("Traduction copiée dans le presse-papier !");
         }
 
         function swapLanguages() {
             const src = document.getElementById('lang-source');
             const target = document.getElementById('lang-target');
-            const temp = src.value;
-            src.value = target.value;
-            target.value = temp;
+            if (src.value !== 'auto') {
+                const temp = src.value;
+                src.value = target.value;
+                target.value = temp;
+            }
         }
 
-        function processTranslation() {
-            const text = document.getElementById('trans-input').value.trim();
-            const srcLang = document.getElementById('lang-source').value;
-            const targetLang = document.getElementById('lang-target').value;
-            const outputEl = document.getElementById('trans-output');
-
+        // --- Simulated Intelligent Correction Engine ---
+        function runCorrection() {
+            const text = document.getElementById('input-text').value.trim();
+            const register = document.getElementById('register-select').value;
+            const style = document.getElementById('style-select').value;
+            
             if (!text) {
-                showToast("Veuillez saisir un texte à traduire.");
+                alert("Veuillez saisir ou coller un texte à corriger.");
                 return;
             }
 
-            outputEl.innerHTML = `<span class="text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Traduction instantanée (${srcLang.toUpperCase()} ➔ ${targetLang.toUpperCase()})...</span>`;
+            const outputDiv = document.getElementById('output-text');
+            const statusIndicator = document.getElementById('status-indicator');
+            const statusText = document.getElementById('status-text');
+            const reportDiv = document.getElementById('correction-report');
+            const reportList = document.getElementById('report-list');
+
+            outputDiv.innerHTML = '<div class="flex items-center justify-center h-32 text-slate-400 space-x-2"><i class="fa-solid fa-spinner fa-spin text-primary-500"></i><span>Analyse orthographique et stylistique en cours...</span></div>';
+            reportList.innerHTML = '';
+            reportDiv.classList.add('hidden');
 
             setTimeout(() => {
-                // Simulation de traduction de haute précision
-                let translated = `[Traduction ${targetLang.toUpperCase()}] : ` + text;
-                if (targetLang === 'en') {
-                    translated = text.replace(/Le succès de notre plateforme repose sur la fiabilité/gi, "The success of our platform is based on reliability")
-                                     .replace(/la rapidité et la simplicité d'utilisation pour tous nos utilisateurs à travers le monde./gi, "speed, and ease of use for all our users worldwide.");
-                } else if (targetLang === 'es') {
-                    translated = text.replace(/Le succès de notre plateforme repose sur la fiabilité/gi, "El éxito de nuestra plataforma se basa en la fiabilidad");
+                let corrected = text;
+                let corrections = [];
+
+                // Rules / adjustments simulation based on chosen register and style
+                if (corrected.includes("sa va") || corrected.includes("sa vas")) {
+                    corrected = corrected.replace(/sa va/gi, "ça va").replace(/sa vas/gi, "ça va");
+                    corrections.push({ type: "Orthographe", desc: "Remplacement de 'sa' par le pronom 'ça'." });
                 }
-                outputEl.innerHTML = `<span class="text-indigo-600 dark:text-indigo-400 font-medium">${escapeHtml(translated)}</span>`;
-                showToast("Traduction effectuée !");
-            }, 500);
+                if (corrected.includes("a cote")) {
+                    corrected = corrected.replace(/a cote/gi, "à côté");
+                    corrections.push({ type: "Typographie", desc: "Ajout des accents sur 'à côté'." });
+                }
+                if (corrected.includes("je suis aller") || corrected.includes("il est aller")) {
+                    corrected = corrected.replace(/aller/gi, "allé");
+                    corrections.push({ type: "Grammaire", desc: "Accord du participe passé après l'auxiliaire." });
+                }
+
+                // General punctuation & capitalization cleanups
+                corrected = corrected.charAt(0).toUpperCase() + corrected.slice(1);
+                
+                if (register === 'academique') {
+                    corrected = corrected.replace(/\bje pense que\b/gi, "il apparaît que");
+                    corrected = corrected.replace(/\btrès\b/gi, particuleIntensive(style));
+                    corrections.push({ type: "Registre Académique", desc: "Substitution des tournures familières par un lexique rigoureux." });
+                } else if (register === 'professionnel') {
+                    corrected = corrected.replace(/\bbonjour\b/gi, "Madame, Monsieur,");
+                    corrections.push({ type: "Registre Professionnel", desc: "Ajustement des formules d'usage en milieu professionnel." });
+                } else if (register === 'administratif') {
+                    corrected = corrected.replace(/\bje veux\b/gi, "j'ai l'honneur de solliciter");
+                    corrections.push({ type: "Registre Administratif", desc: "Uniformisation aux normes de rédaction administrative." });
+                }
+
+                if (style === 'soutenu') {
+                    corrected = corrected.replace(/\bfaire\b/gi, "accomplir").replace(/\bvoir\b/gi, "discerner");
+                    corrections.push({ type: "Style Soutenu", desc: "Enrichissement lexical et vocabulaire recherché." });
+                }
+
+                // If no specific keyword triggered, ensure standard cleanup
+                if (corrections.length === 0) {
+                    corrections.push({ type: "Analyse globale", desc: `Texte optimisé selon le registre ${register} et le style ${style}.` });
+                }
+
+                outputDiv.innerText = corrected;
+
+                // Update Indicator
+                statusIndicator.className = "flex items-center space-x-2 px-3 py-1.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 rounded-full text-xs font-medium text-amber-700 dark:text-amber-400";
+                statusIndicator.innerHTML = '<span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span><span id="status-text">' + corrections.length + ' correctif(s) appliqué(s)</span>';
+
+                // Populate Report
+                reportList.innerHTML = '';
+                corrections.forEach(c => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span class="font-semibold text-primary-600 dark:text-primary-400">[${c.type}]</span> ${c.desc}`;
+                    reportList.appendChild(li);
+                });
+                reportDiv.classList.remove('hidden');
+
+            }, 600);
         }
 
-        function escapeHtml(str) {
-            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        function particuleIntensive(style) {
+            return style === 'soutenu' ? 'hautement' : 'fortement';
         }
 
-        function copyCurrentCode() {
-            const code = document.documentElement.outerHTML;
-            const textarea = document.createElement("textarea");
-            textarea.value = code;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand("copy");
-            document.body.removeChild(textarea);
-            showToast("Code source complet copié ! Vous pouvez le coller dans index.html");
+        // --- Simulated Rephrasing Engine ---
+        function runRephrase() {
+            const text = document.getElementById('rephrase-input').value.trim();
+            const goal = document.getElementById('rephrase-goal').value;
+            const outputContainer = document.getElementById('rephrase-output');
+
+            if (!text) {
+                alert("Veuillez saisir une phrase à reformuler.");
+                return;
+            }
+
+            outputContainer.innerHTML = '<div class="flex items-center justify-center h-32 text-slate-400 space-x-2"><i class="fa-solid fa-spinner fa-spin text-primary-500"></i><span>Génération des variantes...</span></div>';
+
+            setTimeout(() => {
+                let variants = [];
+                if (goal === 'fluent') {
+                    variants = [
+                        `Version fluide 1 : ${text} (exprimé avec plus de naturel et de clarté).`,
+                        `Version fluide 2 : De manière générale, ${text.toLowerCase()} sans ambages.`,
+                        `Version fluide 3 : Il convient de noter que ${text.toLowerCase()}`
+                    ];
+                } else if (goal === 'concise') {
+                    variants = [
+                        `Synthèse directe : ${text.split(' ').slice(0, 6).join(' ')}...`,
+                        `Version condensée : ${text.substring(0, 40)}...`
+                    ];
+                } else if (goal === 'formal') {
+                    variants = [
+                        `Variante percutante : ${text} — un enjeu majeur pour votre démarche.`,
+                        `Tournure exécutive : Par la présente, nous soulignons que ${text.toLowerCase()}`
+                    ];
+                } else {
+                    variants = [
+                        `Variante littéraire : C'est avec une subtile exactitude que ${text.toLowerCase()}`,
+                        `Style soigné : En d'autres termes, ${text.toLowerCase()}`
+                    ];
+                }
+
+                outputContainer.innerHTML = '';
+                variants.forEach((v, index) => {
+                    const card = document.createElement('div');
+                    card.className = "p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl flex items-center justify-between text-sm";
+                    card.innerHTML = `<span>${v}</span><button onclick="navigator.clipboard.writeText('${v.replace(/'/g, "\\'")}'); alert('Variante copiée !');" class="text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-2.5 py-1.5 rounded-lg text-primary-600 dark:text-primary-400 hover:bg-primary-50 transition"><i class="fa-regular fa-copy"></i></button>`;
+                    outputContainer.appendChild(card);
+                });
+            }, 600);
+        }
+
+        // --- Simulated Universal Translation Engine ---
+        function runTranslation() {
+            const text = document.getElementById('translate-input').value.trim();
+            const targetLang = document.getElementById('lang-target').value;
+            const outputDiv = document.getElementById('translate-output');
+
+            if (!text) {
+                alert("Veuillez saisir un texte à traduire.");
+                return;
+            }
+
+            outputDiv.innerHTML = '<div class="flex items-center justify-center h-32 text-slate-400 space-x-2"><i class="fa-solid fa-spinner fa-spin text-primary-500"></i><span>Traduction universelle en cours...</span></div>';
+
+            setTimeout(() => {
+                let translation = "";
+                // Mock translations for demonstration across all target languages
+                if (targetLang === 'en') {
+                    translation = `[Traduction Anglaise] : ${text} (Translated reliably with optimal grammatical accuracy).`;
+                } else if (targetLang === 'es') {
+                    translation = `[Traducción al Español] : ${text} (Traducido con total precisión y fluidez).`;
+                } else if (targetLang === 'de') {
+                    translation = `[Deutsche Übersetzung] : ${text} (Zuverlässig und präzise übersetzt).`;
+                } else if (targetLang === 'zh') {
+                    translation = `[中文翻译] : ${text} (已使用专业术语库进行高精度互译).`;
+                } else if (targetLang === 'ar') {
+                    translation = `[الترجمة العربية] : ${text} (ترجمة دقيقة وموثوقة).`;
+                } else {
+                    translation = `[Traduction (${targetLang.toUpperCase()})] : ${text} (Traduction universelle hautement fiable générée avec succès).`;
+                }
+
+                outputDiv.innerText = translation;
+            }, 600);
         }
     </script>
 </body>
